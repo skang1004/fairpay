@@ -7,6 +7,7 @@ import {
   Typography,
   Container,
   withStyles,
+  Icon,
 } from '@material-ui/core';
 import CompanyComparison from './CompanyComparison.jsx';
 import IndividualComparison from './IndividualComparison.jsx';
@@ -29,7 +30,7 @@ function Home(props) {
   // this is name of employee
   const [name, setName] = useState(null);
   const [company, setCompany] = useState(null);
-
+  const [image, setImage] = useState(null)
   const [city, setCity] = useState(null);
   // this is job title
   const [jobTitle, setJobTitle] = useState(null);
@@ -79,6 +80,7 @@ function Home(props) {
 
   // used for prop drilling into child components
   const employeesNames = [];
+  const employeesImage = [];
   const employeesSexuality = [];
   const employeesGender = [];
   const employeesAge = [];
@@ -101,11 +103,18 @@ function Home(props) {
   const aggregateByCityAvg = [];
 
   useEffect(() => {
+    console.log('this is our cookie   ', document.cookie)
     let user_linkedin_id = document.cookie;
     user_linkedin_id = user_linkedin_id
       .split('; ')
       .find((row) => row.startsWith('userId'))
       .split('=')[1];
+    let image_url = document.cookie;
+    image_url = image_url
+      .split('; ')
+      .find((row) => row.startsWith('image_url'))
+      .split('=')[1];
+    console.log('this is our image url   ', image_url.toString())
     setLoading(true);
     console.log('Data about to be fetch and wait.');
     const asyncDataFetch = async () => {
@@ -113,10 +122,11 @@ function Home(props) {
         let response = await fetch(`/api/company/${user_linkedin_id}`);
         let data = await response.json();
         const current = data.currentUser;
-
+        console.log('this is the current users info', current)
         // server added middlewares that grab city wide comparisons, have to parse that from data variable and store in new states
         console.log('this is data from fetch in home component', data);
-
+        console.log('image_url   ', decodeURIComponent(image_url))
+        const decodedImage_URL = decodeURIComponent(image_url)
         // setting state for current logged in user
         setName(current.name);
         setCompany(current.linkedin_id);
@@ -134,6 +144,7 @@ function Home(props) {
         setStockOptions(current.stock_options);
         setSigningBonus(current.signing_bonus);
         setFtStatus(current.full_time_status);
+        setImage(decodedImage_URL);
 
         //grabbing race averages
         const raceList = data.raceStats;
@@ -276,13 +287,16 @@ function Home(props) {
       {loading ? null : (
         <div className='current_user_header'>
           <h2 id='current_user_name'>Hello {name}</h2>
+
+          <img src={image} className="linkedinImage" />
+
           <label id='current_user_label'>
             {jobTitle} at {company} in {city}
           </label>
         </div>
       )}
-      <Container id='comparison_tabs'>
-        <AppBar id='company_individual_toggle' position='static'>
+      <Container id='comparison_tabs' >
+        <AppBar id='company_individual_toggle' position='static' width={500} >
           <Tabs value={view} view={view} onChange={handleComparison} centered>
             <Tab label='Company-Wide' />
             <Tab label='City-Wide' />
@@ -293,92 +307,91 @@ function Home(props) {
       {loading ? (
         <h2 className='current_user_header'>Loading Data...</h2>
       ) : (
-        <div>
-          <div id='tables_div'>
-            <Container>
-              <CompanyComparison
-                view={view}
-                index={0}
-                name={name}
-                company={company}
-                jobTitle={jobTitle}
-                sexuality={sexuality}
-                age={age}
-                gender={gender}
-                race={race}
-                employeeType={employeeType}
-                yrsExperience={yrsExperience}
-                yrsCompany={yrsCompany}
-                baseSalary={baseSalary}
-                annualBonus={annualBonus}
-                stockOptions={stockOptions}
-                signingBonus={signingBonus}
-                ftStatus={ftStatus}
-                raceList={raceList}
-                genderList={genderList}
-                ageList={ageList}
-                aggregateList={aggregateList}
-                allNames={allNames}
-                loading={loading}
-              />
-              <CityComparison
-                view={view}
-                index={1}
-                name={name}
-                company={company}
-                jobTitle={jobTitle}
-                sexuality={sexuality}
-                age={age}
-                gender={gender}
-                race={race}
-                employeeType={employeeType}
-                yrsExperience={yrsExperience}
-                yrsCompany={yrsCompany}
-                baseSalary={baseSalary}
-                annualBonus={annualBonus}
-                stockOptions={stockOptions}
-                signingBonus={signingBonus}
-                ftStatus={ftStatus}
-                raceList={raceByCityList}
-                genderList={genderByCityList}
-                ageList={ageByCityList}
-                aggregateList={aggregateByCityList}
-                allNames={allNames}
-              />
-              <IndividualComparison
-                view={view}
-                index={2}
-                name={name}
-                company={company}
-                jobTitle={jobTitle}
-                sexuality={sexuality}
-                age={age}
-                gender={gender}
-                race={race}
-                employeeType={employeeType}
-                yrsExperience={yrsExperience}
-                yrsCompany={yrsCompany}
-                baseSalary={baseSalary}
-                annualBonus={annualBonus}
-                stockOptions={stockOptions}
-                signingBonus={signingBonus}
-                ftStatus={ftStatus}
-                allNames={allNames}
-                allGenders={allGenders}
-                allAges={allAges}
-                allSexes={allSexes}
-                allTypes={allTypes}
-                allYrsExperience={allYrsExperience}
-                allYrsCompany={allYrsCompany}
-                allBaseSalary={allBaseSalary}
-              />
-            </Container>
+          <div>
+            <div id='tables_div'>
+              <Container>
+                <CompanyComparison
+                  view={view}
+                  index={0}
+                  name={name}
+                  company={company}
+                  jobTitle={jobTitle}
+                  sexuality={sexuality}
+                  age={age}
+                  gender={gender}
+                  race={race}
+                  employeeType={employeeType}
+                  yrsExperience={yrsExperience}
+                  yrsCompany={yrsCompany}
+                  baseSalary={baseSalary}
+                  annualBonus={annualBonus}
+                  stockOptions={stockOptions}
+                  signingBonus={signingBonus}
+                  ftStatus={ftStatus}
+                  raceList={raceList}
+                  genderList={genderList}
+                  ageList={ageList}
+                  aggregateList={aggregateList}
+                  allNames={allNames}
+                  loading={loading}
+                />
+                <CityComparison
+                  view={view}
+                  index={1}
+                  name={name}
+                  company={company}
+                  jobTitle={jobTitle}
+                  sexuality={sexuality}
+                  age={age}
+                  gender={gender}
+                  race={race}
+                  employeeType={employeeType}
+                  yrsExperience={yrsExperience}
+                  yrsCompany={yrsCompany}
+                  baseSalary={baseSalary}
+                  annualBonus={annualBonus}
+                  stockOptions={stockOptions}
+                  signingBonus={signingBonus}
+                  ftStatus={ftStatus}
+                  raceList={raceByCityList}
+                  genderList={genderByCityList}
+                  ageList={ageByCityList}
+                  aggregateList={aggregateByCityList}
+                  allNames={allNames}
+                />
+                <IndividualComparison
+                  view={view}
+                  index={2}
+                  name={name}
+                  company={company}
+                  jobTitle={jobTitle}
+                  sexuality={sexuality}
+                  age={age}
+                  gender={gender}
+                  race={race}
+                  employeeType={employeeType}
+                  yrsExperience={yrsExperience}
+                  yrsCompany={yrsCompany}
+                  baseSalary={baseSalary}
+                  annualBonus={annualBonus}
+                  stockOptions={stockOptions}
+                  signingBonus={signingBonus}
+                  ftStatus={ftStatus}
+                  allNames={allNames}
+                  allGenders={allGenders}
+                  allAges={allAges}
+                  allSexes={allSexes}
+                  allTypes={allTypes}
+                  allYrsExperience={allYrsExperience}
+                  allYrsCompany={allYrsCompany}
+                  allBaseSalary={allBaseSalary}
+                />
+              </Container>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </React.Fragment>
   );
 }
 
 export default Home;
-// export default withStyles(styles)(Home);
