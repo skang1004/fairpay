@@ -8,6 +8,7 @@ import {
   Typography,
   SvgIcon,
   ThemeProvider,
+  Avatar
 } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Home from './components/Home.jsx';
@@ -22,6 +23,8 @@ import {
   Link,
   Redirect,
 } from 'react-router-dom';
+
+// import { decodedImage_URL } from './components/Home.jsx'
 
 import './components/stylesheets/styles.css';
 
@@ -41,15 +44,28 @@ const theme = createMuiTheme({
     },
   },
 });
-
+let image = null;
+let avatarURL = '';
+if (image === null) {
+  avatarURL = 'http://www.newdesignfile.com/postpic/2009/04/white-user-profile-picture-icon_236454.png';
+}
+else {
+  avatarURL = image;
+};
 const App = () => {
+
   return (
     <div>
       <ThemeProvider theme={theme}>
         <AppBar position="static" id="appBar">
           <Tabs value={0} variant="fullWidth">
             <Tab label="FairPay" icon={<GraphicEqRoundedIcon />} />
-            {/* <Tab label="User" icon={<PersonRoundedIcon />} /> */}
+            <Tab label="Profile" icon={<Avatar src={avatarURL} />} />
+            {/* {if (user_image_url) {
+              <Tab label="User" icon={<image_url />
+              } />}
+            else {<Tab label="User" icon={<PersonRoundedIcon />} />}}
+            <Tab label="avatar" icon={avatar} */}
           </Tabs>
         </AppBar>
         <Router>
