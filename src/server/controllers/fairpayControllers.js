@@ -1,10 +1,10 @@
-const db = require("../models/payfairModels");
-const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
+const db = require('../models/payfairModels');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
-const getCommonJobTitles = require("../helpers/getCommonJobTitles");
-const upsertCompany = require("../helpers/upsertCompany");
-const insertSalary = require("../helpers/insertSalary");
+const getCommonJobTitles = require('../helpers/getCommonJobTitles');
+const upsertCompany = require('../helpers/upsertCompany');
+const insertSalary = require('../helpers/insertSalary');
 
 const fairpayController = {};
 
@@ -28,10 +28,10 @@ fairpayController.getUser = (req, res, next) => {
 
   db.query(queryString, params, (err, response) => {
     if (err) {
-      console.log("Error in query for user: ", err);
+      console.log('Error in query for user: ', err);
     }
 
-    console.log("response in getUser", response.rows);
+    console.log('response in getUser', response.rows);
     res.locals.userData = response.rows;
 
     next();
@@ -46,9 +46,9 @@ fairpayController.getCommonJobTitles = async (req, res, next) => {
 
 // POST /api/user
 fairpayController.onboardUser = async (req, res, next) => {
-  console.log("city in onboarduser controller", req.body.city);
+  console.log('city in onboarduser controller', req.body.city);
   //if (!req.body.linkedin_user_id || !req.body.name || !req.body.company_name || !req.body.job_title || !req.body.company_linkedin_id) {
-  console.log("COOKIES ", req.cookies);
+  console.log('COOKIES ', req.cookies);
   let userIdCookie = jwt.verify(
     req.cookies.jsonToken,
     process.env.LINKEDIN_SECRET
@@ -64,7 +64,7 @@ fairpayController.onboardUser = async (req, res, next) => {
   let salaryKey = await insertSalary.insert(req, res, companyKey);
 
   // then insert user into user table, including name, company foreign key and salary foreign key
-  console.log('onboardUser req.body: ')
+  console.log('onboardUser req.body: ');
   console.log(req.body);
   let { userId, sexuality, age, gender, race, city, state } = req.body;
   queryString = `UPDATE users 
@@ -92,7 +92,7 @@ fairpayController.onboardUser = async (req, res, next) => {
       next();
     })
     .catch((err) =>
-      console.log("Error in query for creating new user entry:\n", err)
+      console.log('Error in query for creating new user entry:\n', err)
     );
 };
 
@@ -110,7 +110,7 @@ fairpayController.getCurrentUser = (req, res, next) => {
         log: `fairpayController.getCurrentUser: ERROR: ${err}`,
         message: {
           err:
-            "fairpayController.getCurrentUser: ERROR: Check server logs for details",
+            'fairpayController.getCurrentUser: ERROR: Check server logs for details',
         },
       });
     }
@@ -139,7 +139,7 @@ fairpayController.getCompanyData = (req, res, next) => {
         log: `fairpayController.getCompanyData: ERROR: ${err}`,
         message: {
           err:
-            "fairpayController.getCompanyData: ERROR: Check server logs for details",
+            'fairpayController.getCompanyData: ERROR: Check server logs for details',
         },
       });
     }
@@ -151,8 +151,7 @@ fairpayController.getCompanyData = (req, res, next) => {
 // middleware gets avg stats of current user's job title in company
 fairpayController.getJobStats = (req, res, next) => {
   const { linkedin_id, job_title } = res.locals.currentUser;
-  const queryString = 
-      `SELECT s.job_title, 
+  const queryString = `SELECT s.job_title, 
               round(avg(s.base_salary), 0) as avg_salary, 
               round(avg(s.annual_bonus), 0) as avg_bonus, 
               round(avg(s.stock_options), 0) as avg_stock_options, 
@@ -172,7 +171,7 @@ fairpayController.getJobStats = (req, res, next) => {
         log: `fairpayController.getJobStats: ERROR: ${err}`,
         message: {
           err:
-            "fairpayController.getJobStats: ERROR: Check server logs for details",
+            'fairpayController.getJobStats: ERROR: Check server logs for details',
         },
       });
     }
@@ -193,7 +192,7 @@ fairpayController.getRaceStats = (req, res, next) => {
         log: `fairpayController.getRaceStats: ERROR: ${err}`,
         message: {
           err:
-            "fairpayController.getRaceStats: ERROR: Check server logs for details",
+            'fairpayController.getRaceStats: ERROR: Check server logs for details',
         },
       });
     }
@@ -214,7 +213,7 @@ fairpayController.getAgeStats = (req, res, next) => {
         log: `fairpayController.getAgeStats: ERROR: ${err}`,
         message: {
           err:
-            "fairpayController.getAgeStats: ERROR: Check server logs for details",
+            'fairpayController.getAgeStats: ERROR: Check server logs for details',
         },
       });
     }
@@ -224,13 +223,10 @@ fairpayController.getAgeStats = (req, res, next) => {
   });
 };
 
-
-
 // middleware gets avg gender stats of current user's company
 fairpayController.getGenderStats = (req, res, next) => {
   const { linkedin_id, job_title } = res.locals.currentUser;
-  const queryString = 
-    `SELECT u.gender, 
+  const queryString = `SELECT u.gender, 
             round(avg(s.base_salary), 0) as avg_salary, 
             round(avg(s.annual_bonus), 0) as avg_bonus, 
             round(avg(s.stock_options), 0) as avg_stock_options, 
@@ -248,7 +244,7 @@ fairpayController.getGenderStats = (req, res, next) => {
         log: `fairpayController.getGenderStats: ERROR: ${err}`,
         message: {
           err:
-            "fairpayController.getGenderStats: ERROR: Check server logs for details",
+            'fairpayController.getGenderStats: ERROR: Check server logs for details',
         },
       });
     }
@@ -262,8 +258,7 @@ fairpayController.getGenderStats = (req, res, next) => {
 // fairpayController.getGenderStatsByCity
 fairpayController.getGenderStatsByCity = (req, res, next) => {
   const { job_title, city } = res.locals.currentUser;
-  const queryString = 
-    `SELECT u.gender,
+  const queryString = `SELECT u.gender,
             round(avg(s.base_salary), 0) AS avg_salary, 
             round(avg(s.annual_bonus), 0) AS avg_bonus, 
             round(avg(s.stock_options), 0) AS avg_stock_options, 
@@ -274,27 +269,26 @@ fairpayController.getGenderStatsByCity = (req, res, next) => {
       AND s.active = 'true'
       AND u.city = '${city}' 
     GROUP BY u.gender ORDER BY u.gender`;
-    db.query(queryString, (err, response) => {
-      if (err) {
-        return next({
-          log: `fairpayController.getGenderStatsByCity: ERROR: ${err}`,
-          message: {
-            err:
-              'fairpayController.getGenderStatsByCity: ERROR: Check server logs for details',
-          },
-        });
-      }
-      res.locals.genderStatsByCity = response.rows;
-      //console.log('response.rows in getgenderstats', response.rows);
-      return next();
-    });
-}
+  db.query(queryString, (err, response) => {
+    if (err) {
+      return next({
+        log: `fairpayController.getGenderStatsByCity: ERROR: ${err}`,
+        message: {
+          err:
+            'fairpayController.getGenderStatsByCity: ERROR: Check server logs for details',
+        },
+      });
+    }
+    res.locals.genderStatsByCity = response.rows;
+    //console.log('response.rows in getgenderstats', response.rows);
+    return next();
+  });
+};
 
 // fairpayController.getAgeStatsByCity
 fairpayController.getAgeStatsByCity = (req, res, next) => {
   const { job_title, city } = res.locals.currentUser;
-  const queryString = 
-    `SELECT u.age,
+  const queryString = `SELECT u.age,
             round(avg(s.base_salary), 0) AS avg_salary, 
             round(avg(s.annual_bonus), 0) AS avg_bonus, 
             round(avg(s.stock_options), 0) AS avg_stock_options, 
@@ -305,27 +299,26 @@ fairpayController.getAgeStatsByCity = (req, res, next) => {
       AND s.active = 'true'
       AND u.city = '${city}' 
     GROUP BY u.age ORDER BY u.age`;
-    db.query(queryString, (err, response) => {
-      if (err) {
-        return next({
-          log: `fairpayController.getAgeStatsByCity: ERROR: ${err}`,
-          message: {
-            err:
-              'fairpayController.getAgeStatsByCity: ERROR: Check server logs for details',
-          },
-        });
-      }
-      res.locals.ageStatsByCity = response.rows;
-      //console.log('response.rows in getgenderstats', response.rows);
-      return next();
-    });
-}
+  db.query(queryString, (err, response) => {
+    if (err) {
+      return next({
+        log: `fairpayController.getAgeStatsByCity: ERROR: ${err}`,
+        message: {
+          err:
+            'fairpayController.getAgeStatsByCity: ERROR: Check server logs for details',
+        },
+      });
+    }
+    res.locals.ageStatsByCity = response.rows;
+    //console.log('response.rows in getgenderstats', response.rows);
+    return next();
+  });
+};
 
 // fairpayController.getRaceStatsByCity
 fairpayController.getRaceStatsByCity = (req, res, next) => {
   const { job_title, city } = res.locals.currentUser;
-  const queryString = 
-    `SELECT u.race,
+  const queryString = `SELECT u.race,
             round(avg(s.base_salary), 0) AS avg_salary, 
             round(avg(s.annual_bonus), 0) AS avg_bonus, 
             round(avg(s.stock_options), 0) AS avg_stock_options, 
@@ -336,27 +329,26 @@ fairpayController.getRaceStatsByCity = (req, res, next) => {
       AND s.active = 'true'
       AND u.city = '${city}' 
     GROUP BY u.race ORDER BY u.race`;
-    db.query(queryString, (err, response) => {
-      if (err) {
-        return next({
-          log: `fairpayController.getRaceStatsByCity: ERROR: ${err}`,
-          message: {
-            err:
-              'fairpayController.getRaceStatsByCity: ERROR: Check server logs for details',
-          },
-        });
-      }
-      res.locals.raceStatsByCity = response.rows;
-      //console.log('response.rows in getgenderstats', response.rows);
-      return next();
-    });
-}
+  db.query(queryString, (err, response) => {
+    if (err) {
+      return next({
+        log: `fairpayController.getRaceStatsByCity: ERROR: ${err}`,
+        message: {
+          err:
+            'fairpayController.getRaceStatsByCity: ERROR: Check server logs for details',
+        },
+      });
+    }
+    res.locals.raceStatsByCity = response.rows;
+    //console.log('response.rows in getgenderstats', response.rows);
+    return next();
+  });
+};
 
 // fairpayController.getJobStatsByCity <-- aggregate data
 fairpayController.getJobStatsByCity = (req, res, next) => {
   const { job_title, city } = res.locals.currentUser;
-  const queryString = 
-      `SELECT s.job_title, 
+  const queryString = `SELECT s.job_title, 
               round(avg(s.base_salary), 0) as avg_salary, 
               round(avg(s.annual_bonus), 0) as avg_bonus, 
               round(avg(s.stock_options), 0) as avg_stock_options, 
@@ -373,12 +365,11 @@ fairpayController.getJobStatsByCity = (req, res, next) => {
         log: `fairpayController.getJobStatsByCity: ERROR: ${err}`,
         message: {
           err:
-            "fairpayController.getJobStatsByCity: ERROR: Check server logs for details",
+            'fairpayController.getJobStatsByCity: ERROR: Check server logs for details',
         },
       });
     }
     res.locals.jobStatsByCity = response.rows;
-    //console.log('response.rows in getracestats', response.rows);
     return next();
   });
 };
