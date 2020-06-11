@@ -7,6 +7,7 @@ import {
   Typography,
   Container,
   withStyles,
+  Icon,
 } from '@material-ui/core';
 import CompanyComparison from './CompanyComparison.jsx';
 import IndividualComparison from './IndividualComparison.jsx';
@@ -286,7 +287,9 @@ function Home(props) {
       {loading ? null : (
         <div className='current_user_header'>
           <h2 id='current_user_name'>Hello {name}</h2>
-          <img src={image} />
+
+          <img src={image} className="linkedinImage" />
+
           <label id='current_user_label'>
             {jobTitle} at {company} in {city}
           </label>

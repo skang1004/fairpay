@@ -24,7 +24,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-// import { decodedImage_URL } from './components/Home.jsx'
+import logo from './assets/FAIRPAY1.png'
 
 import './components/stylesheets/styles.css';
 
@@ -46,6 +46,7 @@ const theme = createMuiTheme({
 });
 let image = null;
 let avatarURL = '';
+let logoURL = 'https://res.cloudinary.com/dvwvkt7iq/image/upload/v1591910325/FAIRPAY_1_tgwhms.png'
 if (image === null) {
   avatarURL = 'http://www.newdesignfile.com/postpic/2009/04/white-user-profile-picture-icon_236454.png';
 }
@@ -59,8 +60,8 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <AppBar position="static" id="appBar">
           <Tabs value={0} variant="fullWidth">
-            <Tab label="FairPay" icon={<GraphicEqRoundedIcon />} />
-            <Tab label="Profile" icon={<Avatar src={avatarURL} />} />
+
+            <Tab icon={<img style={{ height: '75px' }} src={logoURL} />} />
             {/* {if (user_image_url) {
               <Tab label="User" icon={<image_url />
               } />}
