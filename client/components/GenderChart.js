@@ -98,6 +98,7 @@ class GenderChart extends Component {
         }
         return 380 - d / 90;
       })
+      .attr('font-size', 14)
       .text((d, i) => {
         return '$' + totalGenderData[i];
       });
