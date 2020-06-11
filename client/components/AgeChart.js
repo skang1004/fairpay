@@ -11,8 +11,6 @@ class AgeChart extends Component {
     // const svgRef = useRef()
   }
 
-  
-
   componentDidMount() {
     const totalAgeData = [];
 
@@ -21,7 +19,7 @@ class AgeChart extends Component {
     let categories = ['avg_salary', 'avg_bonus', 'avg_stock'];
 
     for (let i = 0; i < categories.length; i++) {
-      for (let j=0; j < chartAgeList.length; j++) {
+      for (let j = 0; j < chartAgeList.length; j++) {
         totalAgeData.push(chartAgeList[j][categories[i]]);
       }
     }
@@ -69,11 +67,10 @@ class AgeChart extends Component {
     //   .style("font-size", 14)
     //   .attr("alignment-baseline", "middle");
 
-    
     const numberOfRanges = chartAgeList.length;
 
     let barGap = 0;
-   
+
     // creating initial bars, then transition handles the height and widths
     svg
       .selectAll('rect')
@@ -169,28 +166,24 @@ class AgeChart extends Component {
         return 435;
       })
       .text((d) => d);
-
-      
   }
-
 
   render() {
     const ranges = ['18-35', '36-50', '51+'];
     const barColors = ['orange', 'yellow', 'brown'];
     const legendBullets = ranges.map((elem, index) => {
       return (
-        <p><span className={'bullet legend-'+barColors[index]}></span>&nbsp;{ranges[index]}</p>
-      )
-    })
+        <p>
+          <span className={'bullet legend-' + barColors[index]}></span>&nbsp;
+          {ranges[index]}
+        </p>
+      );
+    });
     console.log(legendBullets);
     return (
       <React.Fragment>
-        
-        <div ref='chart'>
-          <div className='legend_box'>
-            {legendBullets}
-          </div>
-          
+        <div ref="chart">
+          <div className="legend_box">{legendBullets}</div>
         </div>
       </React.Fragment>
     );
