@@ -64,7 +64,7 @@ class AgeChart extends Component {
     //   .style("font-size", 14)
     //   .attr("alignment-baseline", "middle");
 
-    const barColors = ['orange', 'yellow', 'brown'];
+    const barColors = ['#1eab4e', '#0c5f7a', '#a5e350'];
     const numberOfRanges = chartAgeList.length;
 
     // creating initial bars, then transition handles the height and widths
@@ -158,7 +158,7 @@ class AgeChart extends Component {
         {/* <div ref="chart" width={500} height={500}>
           {" "}
         </div> */}
-        <div ref='chart'>
+        <div ref="chart">
           {/* <h1>This is the bar chart</h1> */}
           {/* <span className='legend_average'> </span>
           <span> Average</span>

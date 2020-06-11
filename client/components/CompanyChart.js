@@ -1,16 +1,11 @@
-
 import React, { Component, useRef } from 'react';
 import * as d3 from 'd3';
 
 class CompanyChart extends Component {
   constructor(props) {
     super(props);
-    // this.createChartWrapper = this.createChartWrapper.bind(this);
-    // const svgRef = useRef()
   }
   componentDidMount() {
-    // new AggregateBarChart(refs.chart);
-    // this.createChartWrapper();
     const userArray = [
       this.props.userSalary,
       this.props.userAnnualBonus,
@@ -24,14 +19,7 @@ class CompanyChart extends Component {
     }
 
     // Use 3 instead of 6 labels
-    const textArray = [
-      'Salary',
-      `Salary`,
-      'Annual Bonus',
-      `Annual Bonus`,
-      'Stock Options',
-      `Stock Options`,
-    ];
+    const textArray = ['Salary', 'Annual Bonus', 'Stock Options'];
 
     const width = 1000;
     const height = 700;
@@ -43,37 +31,6 @@ class CompanyChart extends Component {
       .attr('height', height + 'px')
       .attr('class', 'bar');
 
-    // making the table legend
-    // svg
-    //   .append("circle")
-    //   .attr("cx", 370)
-    //   .attr("cy", 20)
-    //   .attr("r", 8)
-    //   .style("fill", "navy");
-
-    // svg
-    //   .append("p")
-    //   .attr("x", 390)
-    //   .attr("y", 20)
-    //   .text("Average")
-    //   .style("font-size", 14)
-    //   .attr("alignment-baseline", "middle");
-
-    // svg
-    //   .append("circle")
-    //   .attr("cx", 370)
-    //   .attr("cy", 50)
-    //   .attr("r", 8)
-    //   .style("fill", "green");
-
-    // svg
-    //   .append("p")
-    //   .attr("x", 390)
-    //   .attr("y", 50)
-    //   .text("User")
-    //   .style("font-size", 14)
-    //   .attr("alignment-baseline", "middle");
-
     // creating initial bars, then transition handles the height and widths
     svg
       .selectAll('rect')
@@ -82,31 +39,21 @@ class CompanyChart extends Component {
       .append('rect')
       .attr('fill', (d, i) => {
         if (i % 2 === 0) {
-          return 'navy';
+          return '#1eab4e';
         }
-        return 'green';
+        return '#0c5f7a';
       })
       .attr('class', 'sBar')
-      .attr('x', (d, i) => 20 + i * 150)
-      .attr('y', 0)
+      .attr('x', (d, i) => {
+        if (i % 2 === 0) {
+          return 120 + i * 150;
+        }
+        return 20 + i * 150;
+      })
+      .attr('y', 300)
       .attr('width', 50)
       .attr('height', 0)
       .append('title')
-      .text((d) => d);
-
-    svg
-      .selectAll('rect')
-      .data(totalCompanyData)
-      .enter()
-      .append('text')
-      .style('font-size', 14)
-      .attr('x', (d, i) => 20 + i * 150)
-      .attr('y', (d, i) => {
-        if (d > 1000) {
-          return 400 - d / 1000 - 20;
-        }
-        return 400 - d / 90 - 20;
-      })
       .text((d) => d);
 
     svg
@@ -137,7 +84,13 @@ class CompanyChart extends Component {
       .data(totalCompanyData)
       .enter()
       .append('text')
-      .attr('x', (d, i) => 10 + i * 152)
+      .attr('font-size', 14)
+      .attr('x', (d, i) => {
+        if (i % 2 === 0) {
+          return 120 + i * 150;
+        }
+        return 20 + i * 150;
+      })
       .attr('y', (d, i) => {
         if (d > 1000) {
           return 380 - d / 1000;
@@ -154,7 +107,12 @@ class CompanyChart extends Component {
       .append('text')
       .style('font-size', 14)
       .attr('dy', '0em')
-      .attr('x', (d, i) => 20 + i * 150)
+      .attr('x', (d, i) => {
+        if (i === 2) {
+          return 168 + i * 280;
+        }
+        return 146 + i * 278;
+      })
       .attr('y', (d, i) => {
         return 450;
       })
@@ -181,4 +139,3 @@ class CompanyChart extends Component {
 }
 
 export default CompanyChart;
-

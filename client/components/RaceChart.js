@@ -6,7 +6,7 @@ class RaceChart extends Component {
     super(props);
   }
   componentDidMount() {
-    const color = ['green', 'yellow', 'blue', 'red'];
+    const color = ['#1eab4e', '#0c5f7a', '#a5e350', '#1eab4e'];
     const totalRaceData = [];
     const numberOfRaces = this.props.raceList.length;
     // console.log('this is the raceList in chart     ', this.props);
