@@ -168,6 +168,19 @@ h2 {
   background-color: brown;
 }
 
+.legend-average {
+  background-color: #1eab4e;
+}
+.legend-user {
+  background-color: #0c5f7a;
+}
+.legend-male {
+  background-color: #1eab4e;
+}
+.legend-female {
+  background-color: #0c5f7a;
+}
+
 #current_user_name {
   font-weight: 100;
   font-size: 2.5rem;

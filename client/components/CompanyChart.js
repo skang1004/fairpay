@@ -120,17 +120,20 @@ class CompanyChart extends Component {
   }
 
   render() {
+    const ranges = ['Average', 'User'];
+    const barColors = ['average', 'user'];
+    const legendBullets = ranges.map((elem, index) => {
+      return (
+        <p>
+          <span className={'bullet legend-' + barColors[index]}></span>&nbsp;
+          {ranges[index]}
+        </p>
+      );
+    });
     return (
       <React.Fragment>
-        {/* <div ref="chart" width={500} height={500}>
-          {" "}
-        </div> */}
         <div ref="chart">
-          {/* <h1>This is the bar chart</h1> */}
-          <span className="legend_average"> </span>
-          <span> Average</span>
-          <span className="legend_user"> </span>
-          <span> User</span>
+          <div className="legend_box">{legendBullets}</div>
         </div>
       </React.Fragment>
     );

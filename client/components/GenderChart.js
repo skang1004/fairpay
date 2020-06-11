@@ -122,9 +122,22 @@ class GenderChart extends Component {
   }
 
   render() {
+    const ranges = ['Female', 'Male'];
+    const barColors = ['male', 'female'];
+    const legendBullets = ranges.map((elem, index) => {
+      return (
+        <p>
+          <span className={'bullet legend-' + barColors[index]}></span>
+          &nbsp;
+          {ranges[index]}
+        </p>
+      );
+    });
     return (
       <React.Fragment>
-        <div ref="chart"></div>
+        <div ref="chart">
+          <div className="legend_box">{legendBullets}</div>
+        </div>
       </React.Fragment>
     );
   }
