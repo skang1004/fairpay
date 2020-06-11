@@ -1,13 +1,11 @@
 import React, { Component, useState } from 'react';
 // import { useState } from "react-hooks";
 import {
-  Button,
   AppBar,
   Tabs,
   Tab,
-  Typography,
-  SvgIcon,
   ThemeProvider,
+  Avatar
 } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Home from './components/Home.jsx';
@@ -19,8 +17,6 @@ import {
   Switch,
   BrowserRouter as Router,
   Route,
-  Link,
-  Redirect,
 } from 'react-router-dom';
 
 import './components/stylesheets/styles.css';
@@ -42,14 +38,17 @@ const theme = createMuiTheme({
   },
 });
 
+let logoURL = 'https://res.cloudinary.com/dvwvkt7iq/image/upload/v1591910325/FAIRPAY_1_tgwhms.png'
+
 const App = () => {
+
   return (
     <div>
       <ThemeProvider theme={theme}>
         <AppBar position="static" id="appBar">
           <Tabs value={0} variant="fullWidth">
-            <Tab label="FairPay" icon={<GraphicEqRoundedIcon />} />
-            {/* <Tab label="User" icon={<PersonRoundedIcon />} /> */}
+
+            <Tab icon={<img style={{ height: '75px' }} src={logoURL} />} />
           </Tabs>
         </AppBar>
         <Router>

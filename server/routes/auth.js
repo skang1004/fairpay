@@ -29,7 +29,7 @@ router.get(
       email: req.user.emails[0].value,
       image_url: req.user.photos[0].value,
     };
-    console.log('in the call back');
+    console.log('in the call back ', res.locals.userData[0].image_url);
     if (process.env.NODE_ENV === 'development') {
       console.log('res.locals.userData', res.locals.userData);
       let jwtToken;
@@ -41,6 +41,7 @@ router.get(
         );
         res.cookie('jsonToken', jwtToken);
         res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+        res.cookie('image_url', res.locals.userData[0].image_url);
         res.redirect('http://localhost:8080/home');
       } else if (!res.locals.userData[0].salary) {
         console.log('user not found, will redirect to onboarding...');
@@ -50,6 +51,7 @@ router.get(
         );
         res.cookie('jsonToken', jwtToken);
         res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+        res.cookie('image_url', res.locals.userData[0].image_url);
         console.log(
           'redirecting to get started, sending cookies for user id: ',
           res.locals.userData[0].linkedin_user_id
@@ -57,8 +59,14 @@ router.get(
         res.redirect('http://localhost:8080/getstarted');
       }
     } else if (res.locals.userData[0].salary) {
+      res.cookie('jsonToken', jwtToken);
+      res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+      res.cookie('image_url', res.locals.userData[0].image_url);
       res.redirect('http://localhost:3000/home');
     } else if (!res.locals.userData[0].salary) {
+      res.cookie('jsonToken', jwtToken);
+      res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+      res.cookie('image_url', res.locals.userData[0].image_url);
       res.redirect('http://localhost:3000/getstarted');
     }
   }
