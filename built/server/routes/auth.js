@@ -1,0 +1,58 @@
+var express = require('express');
+var router = express.Router();
+var passport = require('passport');
+var fairpayController = require('../controllers/fairpayControllers.js');
+var jwt = require('jsonwebtoken');
+var cookieParser = require('cookie-parser');
+/*
+The initial call to authenticate with linkedin
+After completion (i.e. user validates credentials), the get route to /linkedin/callback (line 21) is invoked
+*/
+router.get('/linkedin', passport.authenticate('linkedin', { state: true }), function (req, res) {
+    // The request will be redirected to LinkedIn for authentication, so this
+    // function will not be called.
+});
+router.get('/linkedin/callback', passport.authenticate('linkedin'), fairpayController.getUser, function (req, res) {
+    var result = {
+        linkedin_id: req.user.id,
+        name: req.user.displayName,
+        email: req.user.emails[0].value,
+        image_url: req.user.photos[0].value,
+    };
+    console.log('in the call back ', res.locals.userData[0].image_url);
+    if (process.env.NODE_ENV === 'development') {
+        console.log('res.locals.userData', res.locals.userData);
+        var jwtToken = void 0;
+        if (res.locals.userData[0].salary) {
+            console.log('existing user');
+            jwtToken = jwt.sign(res.locals.userData[0].linkedin_user_id, process.env.LINKEDIN_SECRET);
+            res.cookie('jsonToken', jwtToken);
+            res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+            res.cookie('image_url', res.locals.userData[0].image_url);
+            res.redirect('http://localhost:8080/home');
+        }
+        else if (!res.locals.userData[0].salary) {
+            console.log('user not found, will redirect to onboarding...');
+            jwtToken = jwt.sign(res.locals.userData[0].linkedin_user_id, process.env.LINKEDIN_SECRET);
+            res.cookie('jsonToken', jwtToken);
+            res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+            res.cookie('image_url', res.locals.userData[0].image_url);
+            console.log('redirecting to get started, sending cookies for user id: ', res.locals.userData[0].linkedin_user_id);
+            res.redirect('http://localhost:8080/getstarted');
+        }
+    }
+    else if (res.locals.userData[0].salary) {
+        res.cookie('jsonToken', jwtToken);
+        res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+        res.cookie('image_url', res.locals.userData[0].image_url);
+        res.redirect('http://localhost:3000/home');
+    }
+    else if (!res.locals.userData[0].salary) {
+        res.cookie('jsonToken', jwtToken);
+        res.cookie('userId', res.locals.userData[0].linkedin_user_id);
+        res.cookie('image_url', res.locals.userData[0].image_url);
+        res.redirect('http://localhost:3000/getstarted');
+    }
+});
+module.exports = router;
+//# sourceMappingURL=auth.js.map
