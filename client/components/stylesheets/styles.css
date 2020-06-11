@@ -91,7 +91,6 @@ h2 {
   display: flex;
   float: left;
   justify-content: flex-start;
-  
 }
 
 .category_comparison_div {
@@ -104,7 +103,6 @@ h2 {
   background-color: #51d07c;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   color: whitesmoke;
-  
 }
 
 .data_display_div {
@@ -167,6 +165,31 @@ h2 {
 
 .legend-brown {
   background-color: brown;
+}
+
+.legend-average {
+  background-color: #1eab4e;
+}
+.legend-user {
+  background-color: #0c5f7a;
+}
+.legend-asian {
+  background-color: #1eab4e;
+}
+.legend-black {
+  background-color: #0c5f7a;
+}
+.legend-hispanic {
+  background-color: #a5e350;
+}
+.legend-white {
+  background-color: #1eab4e;
+}
+.legend-male {
+  background-color: #1eab4e;
+}
+.legend-female {
+  background-color: #0c5f7a;
 }
 
 #current_user_name {

@@ -6,7 +6,7 @@ class RaceChart extends Component {
     super(props);
   }
   componentDidMount() {
-    const color = ['#1eab4e', '#0c5f7a', '#a5e350', 'red'];
+    const color = ['#1eab4e', '#0c5f7a', '#a5e350', '#1eab4e'];
     const totalRaceData = [];
     const numberOfRaces = this.props.raceList.length;
     // console.log('this is the raceList in chart     ', this.props);
@@ -22,7 +22,7 @@ class RaceChart extends Component {
 
     const textArray = ['Salary', 'Annual Bonus', 'Stock Options'];
 
-    const width = 1000;
+    const width = 1200;
     const height = 700;
 
     const svg = d3
@@ -31,21 +31,6 @@ class RaceChart extends Component {
       .attr('width', width + 'px')
       .attr('height', height + 'px')
       .attr('class', 'bar');
-
-    // making the table legend
-    svg
-      .append('circle')
-      .attr('cx', 370)
-      .attr('cy', 20)
-      .attr('r', 8)
-      .style('fill', 'navy');
-
-    svg
-      .append('circle')
-      .attr('cx', 370)
-      .attr('cy', 50)
-      .attr('r', 8)
-      .style('fill', 'green');
 
     // // svg
     // //   .append("p")
@@ -66,7 +51,6 @@ class RaceChart extends Component {
     // const color = ['red', 'blue', 'green', 'yelow'];
     // creating initial bars, then transition handles the height and widths
     let space = 0;
-    let flag = false;
     svg
       .selectAll('rect')
       .data(totalRaceData)
@@ -77,12 +61,10 @@ class RaceChart extends Component {
       })
       .attr('class', 'sBar')
       .attr('x', (d, i) => {
-        if (i % numberOfRaces === 0 && flag) {
+        if (i % numberOfRaces === 0) {
           space += 200;
         }
-        if (i % numberOfRaces === 0 && !flag) {
-          flag = true;
-        }
+
         return space + i * 50;
       })
       .attr('y', 300)
@@ -91,20 +73,20 @@ class RaceChart extends Component {
       .append('title')
       .text((d) => d);
 
-    svg
-      .selectAll('rect')
-      .data(totalRaceData)
-      .enter()
-      .append('text')
-      .style('font-size', 14)
-      .attr('x', (d, i) => 20 + i * 150)
-      .attr('y', (d, i) => {
-        if (d > 1000) {
-          return 400 - d / 1000 - 20;
-        }
-        return 400 - d / 90 - 20;
-      })
-      .text((d) => d);
+    // svg
+    //   .selectAll('rect')
+    //   .data(totalRaceData)
+    //   .enter()
+    //   .append('text')
+    //   .style('font-size', 14)
+    //   .attr('x', (d, i) => 20 + i * 150)
+    //   .attr('y', (d, i) => {
+    //     if (d > 1000) {
+    //       return 400 - d / 1000 - 20;
+    //     }
+    //     return 400 - d / 90 - 20;
+    //   })
+    //   .text((d) => d);
 
     svg
       .selectAll('rect')
@@ -131,17 +113,14 @@ class RaceChart extends Component {
 
     // // Salary labels
     let labelSpace = 0;
-    let labelFlag = false;
+
     texts
       .data(totalRaceData)
       .enter()
       .append('text')
       .attr('x', (d, i) => {
-        if (i % numberOfRaces === 0 && labelFlag) {
+        if (i % numberOfRaces === 0) {
           labelSpace += 200;
-        }
-        if (i % numberOfRaces === 0 && !labelFlag) {
-          labelFlag = true;
         }
         return labelSpace + i * 50;
       })
@@ -151,6 +130,7 @@ class RaceChart extends Component {
         }
         return 380 - d / 90;
       })
+      .attr('font-size', 14)
       .text((d, i) => {
         return '$' + totalRaceData[i];
       });
@@ -162,7 +142,7 @@ class RaceChart extends Component {
       .style('font-size', 14)
       .attr('dy', '0em')
       .attr('x', (d, i) => {
-        return 50 + i * 345;
+        return 250 + i * 345;
       })
       .attr('y', (d, i) => {
         return 450;
@@ -171,9 +151,21 @@ class RaceChart extends Component {
   }
 
   render() {
+    const ranges = ['Asian', 'Black', 'Hispanic', 'White'];
+    const barColors = ['asian', 'black', 'hispanic', 'white'];
+    const legendBullets = ranges.map((elem, index) => {
+      return (
+        <p>
+          <span className={'bullet legend-' + barColors[index]}></span>&nbsp;
+          {ranges[index]}
+        </p>
+      );
+    });
     return (
       <React.Fragment>
-        <div ref='chart'></div>
+        <div ref="chart">
+          <div className="legend_box">{legendBullets}</div>
+        </div>
       </React.Fragment>
     );
   }

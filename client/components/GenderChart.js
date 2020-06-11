@@ -6,21 +6,28 @@ class GenderChart extends Component {
     super(props);
   }
   componentDidMount() {
-    const color = ['green', 'yelow', 'blue'];
+    // Color of the bars
+    const color = ['#1eab4e', '#0c5f7a'];
     const totalGenderData = [];
     const numberOfGenders = this.props.genderList.length;
-    // console.log('this is the raceList in chart     ', this.props);
-    for (let i = 0; i < this.props.genderList.length; i++) {
+    // Create the array to be iterated through to populate the chart
+    for (let i = 0; i < numberOfGenders; i++) {
       totalGenderData.push(this.props.genderList[i].avg_salary);
+    }
+    for (let i = 0; i < numberOfGenders; i++) {
       totalGenderData.push(this.props.genderList[i].avg_bonus);
+    }
+    for (let i = 0; i < numberOfGenders; i++) {
       totalGenderData.push(this.props.genderList[i].avg_stock);
     }
 
     const textArray = ['Salary', 'Annual Bonus', 'Stock Options'];
 
+    // Set dimensions of the chart
     const width = 1000;
     const height = 700;
 
+    // Grab the chart reference to be rendered to
     const svg = d3
       .select(this.refs.chart)
       .append('svg')
@@ -28,39 +35,7 @@ class GenderChart extends Component {
       .attr('height', height + 'px')
       .attr('class', 'bar');
 
-    // making the table legend
-    // svg
-    //   .append("circle")
-    //   .attr("cx", 370)
-    //   .attr("cy", 20)
-    //   .attr("r", 8)
-    //   .style("fill", "navy");
-
-    // // svg
-    // //   .append("p")
-    // //   .attr("x", 390)
-    // //   .attr("y", 20)
-    // //   .text("Average")
-    // //   .style("font-size", 14)
-    // //   .attr("alignment-baseline", "middle");
-
-    // // svg
-    // //   .append("circle")
-    // //   .attr("cx", 370)
-    // //   .attr("cy", 50)
-    // //   .attr("r", 8)
-    // //   .style("fill", "green");
-
-    // // svg
-    // //   .append("p")
-    // //   .attr("x", 390)
-    // //   .attr("y", 50)
-    // //   .text("User")
-    // //   .style("font-size", 14)
-    // //   .attr("alignment-baseline", "middle");
-
-    // const color = ['red', 'blue', 'green', 'yelow'];
-    // creating initial bars, then transition handles the height and widths
+    // Fill bars with color and height (initially 0, transitioning higher)
     svg
       .selectAll('rect')
       .data(totalGenderData)
@@ -70,28 +45,19 @@ class GenderChart extends Component {
         return color[i % numberOfGenders];
       })
       .attr('class', 'sBar')
-      .attr('x', (d, i) => 20 + i * 150)
-      .attr('y', 0)
+      .attr('x', (d, i) => {
+        if (i % 2 === 0) {
+          return 120 + i * 150;
+        }
+        return 20 + i * 150;
+      })
+      .attr('y', 300)
       .attr('width', 50)
       .attr('height', 0)
       .append('title')
       .text((d) => d);
 
-    svg
-      .selectAll('rect')
-      .data(totalGenderData)
-      .enter()
-      .append('text')
-      .style('font-size', 14)
-      .attr('x', (d, i) => 20 + i * 150)
-      .attr('y', (d, i) => {
-        if (d > 1000) {
-          return 400 - d / 1000 - 20;
-        }
-        return 400 - d / 90 - 20;
-      })
-      .text((d) => d);
-
+    // Transition animation
     svg
       .selectAll('rect')
       .transition()
@@ -115,21 +81,28 @@ class GenderChart extends Component {
 
     let texts = svg.selectAll('text');
 
-    // // Salary labels
+    // Salary labels
     texts
       .data(totalGenderData)
       .enter()
       .append('text')
-      .attr('x', (d, i) => 10 + i * 152)
+      .attr('x', (d, i) => {
+        if (i % 2 === 0) {
+          return 120 + i * 150;
+        }
+        return 20 + i * 150;
+      })
       .attr('y', (d, i) => {
         if (d > 1000) {
           return 380 - d / 1000;
         }
         return 380 - d / 90;
       })
+      .attr('font-size', 14)
       .text((d, i) => {
         return '$' + totalGenderData[i];
       });
+
     // X labels
     texts
       .data(textArray)
@@ -137,7 +110,12 @@ class GenderChart extends Component {
       .append('text')
       .style('font-size', 14)
       .attr('dy', '0em')
-      .attr('x', (d, i) => 20 + i * 150)
+      .attr('x', (d, i) => {
+        if (i === 2) {
+          return 168 + i * 280;
+        }
+        return 146 + i * 278;
+      })
       .attr('y', (d, i) => {
         return 450;
       })
@@ -145,9 +123,22 @@ class GenderChart extends Component {
   }
 
   render() {
+    const ranges = ['Female', 'Male'];
+    const barColors = ['male', 'female'];
+    const legendBullets = ranges.map((elem, index) => {
+      return (
+        <p>
+          <span className={'bullet legend-' + barColors[index]}></span>
+          &nbsp;
+          {ranges[index]}
+        </p>
+      );
+    });
     return (
       <React.Fragment>
-        <div ref="chart"></div>
+        <div ref="chart">
+          <div className="legend_box">{legendBullets}</div>
+        </div>
       </React.Fragment>
     );
   }
