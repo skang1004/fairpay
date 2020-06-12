@@ -1,6 +1,6 @@
-const path = require('path');
+import path from 'path';
 
-const passport = require('passport');
+import passport from 'passport';
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 require('dotenv').config({ path: path.resolve(__dirname, './../../.env') });
 
