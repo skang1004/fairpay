@@ -9,5 +9,5 @@ var react_dom_1 = require("react-dom");
 var App_jsx_1 = __importDefault(require("./App.jsx"));
 require("regenerator-runtime/runtime");
 react_dom_1.render(react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
-    react_1.default.createElement(App_jsx_1.default, null)), document.getElementById("root"));
+    react_1.default.createElement(App_jsx_1.default, null)), document.getElementById('root'));
 //# sourceMappingURL=index.js.map
