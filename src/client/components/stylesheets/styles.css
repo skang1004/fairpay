@@ -1,0 +1,276 @@
+/* CSS - Cascading Style Sheet */
+/* Palette color codes */
+/* Palette URL: http://paletton.com/#uid=52W0u0ktZoxkJvaqjtexIk7GXeV */
+
+/* Feel free to copy&paste color codes to your application */
+
+/* As hex codes */
+
+.color-primary-0 {
+  color: #098f36;
+} /* Main Primary color */
+.color-primary-1 {
+  color: #40b668;
+}
+.color-primary-2 {
+  color: #1eab4e;
+}
+.color-primary-3 {
+  color: #007528;
+}
+.color-primary-4 {
+  color: #00571d;
+}
+
+.color-secondary-1-0 {
+  color: #0c5f7a;
+} /* Main Secondary color */
+.color-secondary-1-1 {
+  color: #3a839b;
+}
+.color-secondary-1-2 {
+  color: #1e7592;
+}
+.color-secondary-1-3 {
+  color: #044c64;
+}
+.color-secondary-1-4 {
+  color: #02384a;
+}
+
+.color-secondary-2-0 {
+  color: #6cb30b;
+} /* Main Secondary color */
+.color-secondary-2-1 {
+  color: #a5e350;
+}
+.color-secondary-2-2 {
+  color: #8bd526;
+}
+.color-secondary-2-3 {
+  color: #559300;
+}
+.color-secondary-2-4 {
+  color: #3f6d00;
+}
+
+#comparison_tabs {
+  width: 70vw;
+  margin-top: 2rem;
+  /* margin-left:7vw; */
+}
+
+#company_individual_toggle {
+  background-color: #52d07c;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(232, 241, 232);
+  color: #424242;
+}
+
+h2 {
+  font-size: 1.4em;
+  font-weight: 300;
+  line-height: 2rem;
+}
+
+.welcome {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 25px 15px;
+  margin: 20vh auto;
+  max-width: 550px;
+  border: solid 1px #114b26;
+}
+
+.category_container {
+  width: 15em;
+  display: flex;
+  float: left;
+  justify-content: flex-start;
+}
+
+.category_comparison_div {
+  width: 13em;
+  /* background-color: #51d07c; */
+  z-index: 10;
+}
+
+.vertical_tab_bar {
+  background-color: #51d07c;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  color: whitesmoke;
+}
+
+.data_display_div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+#linkedinButton {
+  width: 174px;
+  height: 42px;
+  margin-top: 15px;
+}
+.current_user_header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#tables_div svg {
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.legend_box {
+  padding-left: 20px;
+  padding-right: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  margin-left: 40px;
+  margin-top: 85px;
+  position: absolute;
+  border-radius: 8px;
+}
+
+.legend_box p {
+  font-size: 14px;
+}
+
+.bullet {
+  display: inline-block;
+  vertical-align: middle;
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(black, 0.25);
+}
+
+.legend-orange {
+  background-color: orange;
+}
+
+.legend-yellow {
+  background-color: yellow;
+}
+
+.legend-brown {
+  background-color: brown;
+}
+
+.legend-average {
+  background-color: #1eab4e;
+}
+.legend-user {
+  background-color: #0c5f7a;
+}
+.legend-asian {
+  background-color: #1eab4e;
+}
+.legend-black {
+  background-color: #0c5f7a;
+}
+.legend-hispanic {
+  background-color: #a5e350;
+}
+.legend-white {
+  background-color: #1eab4e;
+}
+.legend-male {
+  background-color: #1eab4e;
+}
+.legend-female {
+  background-color: #0c5f7a;
+}
+
+#current_user_name {
+  font-weight: 100;
+  font-size: 2.5rem;
+}
+
+#current_user_label {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+#tables_div {
+  margin-top: 1rem;
+}
+
+.table_displays {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-row {
+  background-color: #f5f7f6;
+  text-align: center;
+}
+
+.TableHead {
+  background-color: #d4dbd7;
+}
+
+.linkedinImage {
+  border: 2px solid black;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+#linkedinButton {
+  width: 203px;
+  height: 49px;
+}
+
+#appBar {
+  background-color: #1eab4e;
+  justify-content: space-between;
+}
+
+.legend_average {
+  display: flex;
+  height: 15px !important;
+  width: 15px !important;
+  background-color: navy;
+  border-radius: 50%;
+}
+.legend_user {
+  display: flex;
+  height: 15px;
+  width: 15px;
+  background-color: green;
+  border-radius: 50%;
+}
+
+#gender_green {
+  background-color: green;
+  display: flex;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+
+#gender_yellow {
+  display: flex;
+  height: 15px;
+  width: 15px;
+  background-color: yellow;
+  border-radius: 50%;
+}
+#gender_blue {
+  display: flex;
+  height: 15px;
+  width: 15px;
+  background-color: blue;
+  border-radius: 50%;
+}
